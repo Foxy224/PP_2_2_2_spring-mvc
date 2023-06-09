@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static web.model.CarService.kolvoCars;
+
 @Controller
 public class CarController {
 
@@ -28,11 +30,7 @@ public class CarController {
 
     @GetMapping(value = "/cars")
     public String PrintCars(ModelMap model, @RequestParam (defaultValue = "5") int count) {
-        if (count > cars.size()) {
-            count = cars.size();
-        }
-
-        model.addAttribute("cars", cars.subList(0, count));
+        model.addAttribute("cars", kolvoCars(count));
         return "cars";
     }
 
