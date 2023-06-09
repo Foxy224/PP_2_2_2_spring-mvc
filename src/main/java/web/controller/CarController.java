@@ -1,19 +1,17 @@
 package web.controller;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.model.Car;
-import web.model.CarService;
+import web.service.CarServiceImlp;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import static web.model.CarService.kolvoCars;
+
 
 @Controller
 public class CarController {
@@ -28,10 +26,18 @@ public class CarController {
         cars.add(new Car("salo", "mazda7", 253622));
     }
 
+
+
     @GetMapping(value = "/cars")
     public String PrintCars(ModelMap model, @RequestParam (defaultValue = "5") int count) {
-        model.addAttribute("cars", kolvoCars(count));
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.scan("web.service");
+        context.refresh();
+        CarServiceImlp carServiceImlp = context.getBean(CarServiceImlp.class);
+        model.addAttribute("cars", carServiceImlp.ListCar(cars, count));
+        context.close();
         return "cars";
     }
+
 
 }
