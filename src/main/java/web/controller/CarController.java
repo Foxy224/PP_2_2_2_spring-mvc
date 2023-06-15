@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import web.service.CarServiceImlp;
 
 
-import static web.service.CarServiceImlp.cars;
-
 
 @Controller
 public class CarController {
@@ -21,7 +19,7 @@ public class CarController {
 
     @GetMapping(value = "/cars")
     public String PrintCars(ModelMap model, @RequestParam (defaultValue = "5") int count) {
-        model.addAttribute("cars", carServiceImlp.ListCar(cars, count));
+        model.addAttribute("cars", carServiceImlp.ListCar(count));
         return "cars";
     }
 

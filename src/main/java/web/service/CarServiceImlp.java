@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class CarServiceImlp implements CarService{
 
-    public static  List<Car> cars = new ArrayList<>();
+    private static  List<Car> cars = new ArrayList<>();
 
      static {
         cars.add(new Car("vax", "lada", 227));
@@ -23,7 +23,7 @@ public class CarServiceImlp implements CarService{
      }
 
      @Override
-    public List<Car> ListCar(List<Car> cars, int value) {
+    public List<Car> ListCar(int value) {
         if (value > cars.size()) {
             value = cars.size();
         }
